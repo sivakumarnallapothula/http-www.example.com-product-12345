@@ -1,89 +1,5 @@
 # http-www.example.com-product-12345
-1at plan:
-To create a crawler for discovering product URLs on e-commerce websites, you need to address the problem statement systematically. Here's a breakdown of the problem and a proposed solution outline:
-
-The goal is to design and implement a crawler that can efficiently discover and extract product URLs from e-commerce websites. The crawler should navigate through the website structure, identify pages containing product information, and store discovered product URLs for further processing or analysis.
-
----
-
-### **Challenges to Address**
-1. **Website Structure Variability**: E-commerce websites have diverse structures, which may include category pages, subcategories, and pagination.
-2. **URL Identification**: Differentiating product URLs from other links like categories, banners, or blog posts.
-3. **Dynamic Content**: Many websites load data dynamically using JavaScript, which may require rendering to extract links.
-4. **Politeness and Legal Constraints**:
-   - Adherence to robots.txt and terms of service.
-   - Rate-limiting to avoid overloading servers.
-5. **Pagination and Infinite Scrolling**: Handling multiple pages or scroll-based loading for large product catalogs.
-6. **Scalability**: Crawling efficiently across multiple websites while handling large data volumes.
-
----
-
-### **Proposed Solution**
-A scalable and configurable web crawler designed to extract product URLs systematically while adhering to best practices.
-
----
-
-### **Solution Outline**
-
-#### **1. Technology Stack**
-- **Programming Language**: Python (popular libraries like `scrapy`, `beautifulsoup4`, `selenium`, or `playwright`).
-- **Database**: Use `MongoDB`, `PostgreSQL`, or `SQLite` for storing URLs.
-- **Queue System**: `RabbitMQ` or `Redis` for managing crawling tasks in distributed setups.
-
-#### **2. Features**
-1. **Seed URLs**: Accept a list of seed URLs (e.g., category or home pages) as starting points for crawling.
-2. **URL Discovery**:
-   - Parse HTML for `<a>` tags to find hyperlinks.
-   - Use heuristics or patterns to identify product URLs (e.g., `/product/` or `/item/` in URLs).
-3. **Dynamic Content Handling**:
-   - Use headless browsers (`selenium`, `playwright`) for rendering JavaScript-heavy pages.
-4. **Pagination**:
-   - Detect pagination patterns (e.g., `?page=`, `&start=`).
-   - Follow "next page" links or load additional items in infinite scroll setups.
-5. **Duplicate Removal**: Maintain a database of discovered URLs to avoid reprocessing.
-6. **Politeness**:
-   - Respect `robots.txt`.
-   - Implement rate limiting and delays between requests.
-7. **Error Handling**:
-   - Retry failed requests.
-   - Handle broken or redirected links.
-8. **Scalability**:
-   - Allow parallel crawling using distributed systems.
-   - Use multithreading or multiprocessing for efficiency.
-9. **Logging and Monitoring**:
-   - Log crawling progress, errors, and discovered URLs.
-   - Provide a dashboard for monitoring.
-
-#### **3. Implementation Steps**
-1. **Setup Crawling Framework**:
-   - Use a framework like `scrapy` for robust crawling.
-2. **Build Parsers**:
-   - Create custom parsers to extract product URLs based on page structure.
-   - Use CSS selectors or XPath to target product links.
-3. **Dynamic Content Support**:
-   - Integrate `selenium` or `playwright` for JavaScript-heavy sites.
-4. **Storage**:
-   - Store URLs in a database with metadata (e.g., category, crawl timestamp).
-5. **Testing**:
-   - Test on a variety of e-commerce websites to refine heuristics and patterns.
-6. **Deployment**:
-   - Containerize the crawler using Docker.
-   - Deploy on cloud platforms like AWS, GCP, or Azure for scalability.
-
----
-
-### **Additional Considerations**
-- **Ethics and Compliance**:
-   - Obtain explicit permissions if necessary.
-   - Abide by site-specific crawling restrictions.
-- **Heuristics for Product URLs**:
-   - Use machine learning to classify URLs as product or non-product links based on patterns.
-- **Performance Optimization**:
-   - Cache responses to reduce redundant requests.
-   - Use lightweight libraries for faster parsing.
-
-2nd plan:
-
+BACK - END
 ## **Design Plan**
 
 ### **1. Requirements**
@@ -273,6 +189,321 @@ The crawler will generate a `product_urls.json` file:
 - Use **distributed crawling** with Scrapy + Scrapy-Redis.
 - Deploy on cloud platforms (AWS, GCP) with Docker containers.
 - Integrate a queue system (e.g., RabbitMQ) for task distribution.
+
+FRONT - END
+
+
+For simplicity, we'll use **React.js** for the frontend and CSS for styling. We will focus on the core functionality of customizing the Apple Watch (e.g., changing cases and bands) and replicating the seamless user experience.
+
+---
+
+### **Core Functionalities to Implement**
+1. **Customization Options**:
+   - **Case Customization**: Different case styles, materials, and colors.
+   - **Band Customization**: Multiple band options with varying colors and materials.
+
+2. **Real-time Updates**:
+   - Instant updates to the watch preview as the user selects customization options.
+
+3. **Responsive Design**:
+   - Ensure the UI works well across devices and screen sizes.
+
+4. **Pixel-Perfect Styling**:
+   - Use CSS/SCSS for precise visual replication.
+
+5. **Interactive Experience**:
+   - Smooth animations and transitions for option selection.
+
+---
+
+### **Code Implementation**
+
+#### **Step 1: Initialize React Project**
+Create a new React project:
+```bash
+npx create-react-app apple-watch-studio-clone
+cd apple-watch-studio-clone
+npm start
+```
+
+Install dependencies:
+```bash
+npm install styled-components react-icons
+```
+
+---
+
+#### **Step 2: Folder Structure**
+Organize the project as follows:
+```
+src/
+├── components/
+│   ├── CaseSelector.js
+│   ├── BandSelector.js
+│   ├── WatchPreview.js
+│   └── Customizer.js
+├── assets/       # Store images for cases and bands
+├── App.js
+├── App.css
+└── index.js
+```
+
+---
+
+#### **Step 3: Watch Customizer Component**
+
+##### **1. `App.js`**
+This is the main entry point that renders the customization interface.
+
+```jsx
+import React from "react";
+import Customizer from "./components/Customizer";
+import "./App.css";
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Apple Watch Studio Clone</h1>
+      </header>
+      <Customizer />
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+##### **2. `Customizer.js`**
+Handles the layout and state management for customization.
+
+```jsx
+import React, { useState } from "react";
+import WatchPreview from "./WatchPreview";
+import CaseSelector from "./CaseSelector";
+import BandSelector from "./BandSelector";
+
+const Customizer = () => {
+  const [selectedCase, setSelectedCase] = useState("silver");
+  const [selectedBand, setSelectedBand] = useState("sport-black");
+
+  return (
+    <div className="customizer">
+      <WatchPreview caseType={selectedCase} bandType={selectedBand} />
+      <div className="selectors">
+        <CaseSelector selectedCase={selectedCase} onCaseChange={setSelectedCase} />
+        <BandSelector selectedBand={selectedBand} onBandChange={setSelectedBand} />
+      </div>
+    </div>
+  );
+};
+
+export default Customizer;
+```
+
+---
+
+##### **3. `WatchPreview.js`**
+Displays a live preview of the watch based on the selected case and band.
+
+```jsx
+import React from "react";
+import "./WatchPreview.css";
+
+const WatchPreview = ({ caseType, bandType }) => {
+  return (
+    <div className="watch-preview">
+      <img
+        src={`/assets/cases/${caseType}.png`}
+        alt={`${caseType} case`}
+        className="watch-case"
+      />
+      <img
+        src={`/assets/bands/${bandType}.png`}
+        alt={`${bandType} band`}
+        className="watch-band"
+      />
+    </div>
+  );
+};
+
+export default WatchPreview;
+```
+
+---
+
+##### **4. `CaseSelector.js`**
+Allows the user to select a case style.
+
+```jsx
+import React from "react";
+import "./CaseSelector.css";
+
+const cases = [
+  { id: "silver", name: "Silver Aluminum" },
+  { id: "gold", name: "Gold Aluminum" },
+  { id: "space-gray", name: "Space Gray Aluminum" },
+];
+
+const CaseSelector = ({ selectedCase, onCaseChange }) => {
+  return (
+    <div className="case-selector">
+      <h3>Select Case</h3>
+      <div className="options">
+        {cases.map((caseOption) => (
+          <div
+            key={caseOption.id}
+            className={`option ${selectedCase === caseOption.id ? "selected" : ""}`}
+            onClick={() => onCaseChange(caseOption.id)}
+          >
+            <img
+              src={`/assets/cases/${caseOption.id}.png`}
+              alt={caseOption.name}
+              className="case-thumbnail"
+            />
+            <span>{caseOption.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CaseSelector;
+```
+
+---
+
+##### **5. `BandSelector.js`**
+Allows the user to select a band.
+
+```jsx
+import React from "react";
+import "./BandSelector.css";
+
+const bands = [
+  { id: "sport-black", name: "Sport Band - Black" },
+  { id: "sport-white", name: "Sport Band - White" },
+  { id: "sport-blue", name: "Sport Band - Blue" },
+];
+
+const BandSelector = ({ selectedBand, onBandChange }) => {
+  return (
+    <div className="band-selector">
+      <h3>Select Band</h3>
+      <div className="options">
+        {bands.map((bandOption) => (
+          <div
+            key={bandOption.id}
+            className={`option ${selectedBand === bandOption.id ? "selected" : ""}`}
+            onClick={() => onBandChange(bandOption.id)}
+          >
+            <img
+              src={`/assets/bands/${bandOption.id}.png`}
+              alt={bandOption.name}
+              className="band-thumbnail"
+            />
+            <span>{bandOption.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default BandSelector;
+```
+
+---
+
+#### **Step 4: Styling**
+
+##### **`App.css`**
+```css
+.App {
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.App-header {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem;
+}
+
+.customizer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.selectors {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+```
+
+##### **`WatchPreview.css`**
+```css
+.watch-preview {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.watch-case,
+.watch-band {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+```
+
+##### **`CaseSelector.css` & `BandSelector.css`**
+```css
+.options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.option {
+  text-align: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.option.selected {
+  border-color: #007aff;
+}
+
+.case-thumbnail,
+.band-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+```
+
+---
+
+### **Step 5: Assets**
+- Add images for cases and bands under the `/assets/cases` and `/assets/bands` directories.
+
+---
+
+
+
 
 
 
