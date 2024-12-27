@@ -1,0 +1,27 @@
+.options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .option {
+    text-align: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .option.selected {
+    border-color: #007aff;
+  }
+  
+  .case-thumbnail,
+  .band-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  

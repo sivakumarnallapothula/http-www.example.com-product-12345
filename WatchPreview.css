@@ -1,0 +1,15 @@
+.watch-preview {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .watch-case,
+  .watch-band {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
